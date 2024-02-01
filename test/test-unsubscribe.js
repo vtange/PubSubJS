@@ -98,28 +98,6 @@ describe( 'unsubscribe method', function() {
         assert(spy2.called);
     });
 
-    it('with topic argument, must clear all matched hierarchical subscriptions', function(){
-        var topic = TestHelper.getUniqueString(),
-            topicA = topic + '.a',
-            topicB = topic + '.a.b',
-            topicC = topic + '.a.b.c',
-            spyA = sinon.spy(),
-            spyB = sinon.spy(),
-            spyC = sinon.spy();
-
-        PubSub.subscribe(topicA, spyA);
-        PubSub.subscribe(topicB, spyB);
-        PubSub.subscribe(topicC, spyC);
-
-        PubSub.unsubscribe(topicB);
-
-        PubSub.publishSync(topicC, TestHelper.getUniqueString());
-
-        assert(spyA.called);
-        refute(spyB.called);
-        refute(spyC.called);
-    });
-
     it('with parent topic argument, must clear all child subscriptions', function() {
         var topic = TestHelper.getUniqueString(),
             topicA = topic + '.a',

@@ -90,23 +90,9 @@
         }
     }
 
-    function createDeliveryFunction( message, data, immediateExceptions ){
-        return function deliverNamespaced(){
-            var topic = String( message ),
-                position = topic.lastIndexOf( '.' );
-
-            // deliver the message as it is now
-            deliverMessage(message, message, data, immediateExceptions);
-
-            // trim the hierarchy and deliver message to each level
-            while( position !== -1 ){
-                topic = topic.substr( 0, position );
-                position = topic.lastIndexOf('.');
-                deliverMessage( message, topic, data, immediateExceptions );
-            }
-
-            deliverMessage(message, ALL_SUBSCRIBING_MSG, data, immediateExceptions);
-        };
+    function deliver(message, data, immediateExceptions){
+        deliverMessage(message, message, data, immediateExceptions);
+        deliverMessage(message, ALL_SUBSCRIBING_MSG, data, immediateExceptions);
     }
 
     function hasDirectSubscribersFor( message ) {
@@ -117,33 +103,20 @@
     }
 
     function messageHasSubscribers( message ){
-        var topic = String( message ),
-            found = hasDirectSubscribersFor(topic) || hasDirectSubscribersFor(ALL_SUBSCRIBING_MSG),
-            position = topic.lastIndexOf( '.' );
-
-        while ( !found && position !== -1 ){
-            topic = topic.substr( 0, position );
-            position = topic.lastIndexOf( '.' );
-            found = hasDirectSubscribersFor(topic);
-        }
-
-        return found;
+        return hasDirectSubscribersFor(String( message )) || hasDirectSubscribersFor(ALL_SUBSCRIBING_MSG);
     }
 
     function publish( message, data, sync, immediateExceptions ){
         message = (typeof message === 'symbol') ? message.toString() : message;
 
-        var deliver = createDeliveryFunction( message, data, immediateExceptions ),
-            hasSubscribers = messageHasSubscribers( message );
-
-        if ( !hasSubscribers ){
+        if ( !messageHasSubscribers( message ) ){
             return false;
         }
 
         if ( sync === true ){
-            deliver();
+            deliver(message, data, immediateExceptions);
         } else {
-            setTimeout( deliver, 0 );
+            setTimeout(deliver.bind(null, message, data, immediateExceptions), 0 );
         }
         return true;
     }

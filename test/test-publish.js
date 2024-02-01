@@ -159,27 +159,6 @@ describe( 'publish method', function () {
         delete PubSub.immediateExceptions;
     });
 
-    it('should fail immediately on exceptions in namespaces when immediateExceptions is true',  function(){
-        var func1 = function(){
-                throw('some error');
-            },
-            spy1 = sinon.spy();
-
-        PubSub.subscribe( 'buy', func1 );
-        PubSub.subscribe( 'buy', spy1 );
-
-        PubSub.immediateExceptions = true;
-
-        assert.exception( function(){
-            PubSub.publishSync( 'buy.tomatoes', 'some data' );
-        });
-
-        refute( spy1.called );
-
-        // make sure we restore PubSub to it's original state
-        delete PubSub.immediateExceptions;
-    });
-
     it('should call all subscribers, even when there are unsubscriptions within', function(done){
         var topic = TestHelper.getUniqueString(),
             spy1 = sinon.spy(),
