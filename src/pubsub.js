@@ -35,7 +35,7 @@
 }(( typeof window === 'object' && window ) || this, function (PubSub){
     'use strict';
 
-    var messages = {},
+    var messages = Object.create(null),
         lastUid = -1,
         ALL_SUBSCRIBING_MSG = '*';
 
@@ -96,20 +96,17 @@
     }
 
     function hasDirectSubscribersFor( message ) {
-        var topic = String( message ),
-            found = Boolean(Object.prototype.hasOwnProperty.call( messages, topic ) && hasKeys(messages[topic]));
-
-        return found;
+        return messages[message] && hasKeys(messages[message]);
     }
 
     function messageHasSubscribers( message ){
-        return hasDirectSubscribersFor(String( message )) || hasDirectSubscribersFor(ALL_SUBSCRIBING_MSG);
+        return hasDirectSubscribersFor( message ) || hasDirectSubscribersFor(ALL_SUBSCRIBING_MSG);
     }
 
     function publish( message, data, sync, immediateExceptions ){
         message = (typeof message === 'symbol') ? message.toString() : message;
 
-        if ( !messageHasSubscribers( message ) ){
+        if ( !messageHasSubscribers( String(message) ) ){
             return false;
         }
 
@@ -162,7 +159,7 @@
 
         // message is not registered yet
         if ( !Object.prototype.hasOwnProperty.call( messages, message ) ){
-            messages[message] = {};
+            messages[message] = Object.create(null);
         }
 
         // forcing token as String, to allow for future expansions without breaking usage
