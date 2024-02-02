@@ -90,7 +90,7 @@
         }
     }
 
-    function deliver(message, data, immediateExceptions){
+    function deliver( message, data, immediateExceptions ) {
         deliverMessage(message, message, data, immediateExceptions);
         deliverMessage(message, ALL_SUBSCRIBING_MSG, data, immediateExceptions);
     }
@@ -99,7 +99,7 @@
         return messages[message] && hasKeys(messages[message]);
     }
 
-    function messageHasSubscribers( message ){
+    function messageHasSubscribers( message ) {
         return hasDirectSubscribersFor( message ) || hasDirectSubscribersFor(ALL_SUBSCRIBING_MSG);
     }
 
@@ -107,6 +107,7 @@
         message = (typeof message === 'symbol') ? message.toString() : message;
 
         if ( !messageHasSubscribers( String(message) ) ){
+            console.warn("No subscribers found for:", message);
             return false;
         }
 
