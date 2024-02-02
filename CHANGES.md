@@ -1,5 +1,13 @@
 # Changes
 
+## 2.0.0
+
+- [`35994b9`](https://github.com/vtange/PubSubJS/commit/35994b95c236d71d8cc2867544a706033653c1ba)
+  (Breaking) Removes hierarchical addressing support.
+  Add console.warn when Publish finds no subscribers for a given topic.
+
+_Released on 2024-02-02._
+
 ## 1.9.4
 
 - [`ae3284d`](https://github.com/mroderick/PubSubJS/commit/ae3284d46054b189e143b405e1bfc6c09643bf77)

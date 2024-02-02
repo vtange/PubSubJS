@@ -1,7 +1,7 @@
 {
-  "name": "pubsub-js",
-  "version": "1.9.4",
-  "description": "Dependency free publish/subscribe library",
+  "name": "pubsub-js-lite",
+  "version": "2.0.0",
+  "description": "Dependency free publish/subscribe library minus hierarchical topic support.",
   "main": "./src/pubsub.js",
   "directories": {
     "lib": "src",
@@ -18,7 +18,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git://github.com/mroderick/PubSubJS.git"
+    "url": "git://github.com/vtange/PubSubJS.git"
   },
   "keywords": [
     "pub/sub",
@@ -28,9 +28,8 @@
     "subscribe"
   ],
   "author": {
-    "name": "Morgan Roderick",
-    "email": "morgan@roderick.dk",
-    "url": "http://roderick.dk"
+    "name": "Victor Tang",
+    "url": "https://github.com/vtange"
   },
   "license": "MIT",
   "devDependencies": {

@@ -1,3 +1,9 @@
+# PubSubJSLite
+## Fork of [mroderick's PubSubJS](https://github.com/mroderick/PubSubJS) with the following changes:
+
+* No hierarchical addressing
+* Add a console.warn to avoid silently failing when no subscribers are found during publish.
+
 <div align="center">
   <p>
     <img src="https://raw.githubusercontent.com/mroderick/PubSubJS/master/branding/logo.png"/ alt="PubSubJS" title="PubSubJS" width="200" height="200">
@@ -30,19 +36,6 @@ PubSubJS is designed to be used within a **single process**, and is not a good c
 * No modification of subscribers (jQuery custom events modify subscribers)
 * Easy to understand and use (thanks to synchronisation decoupling)
 * Small(ish), less than 1kb minified and gzipped
-
-## Getting PubSubJS
-
-There are several ways of getting PubSubJS
-
-* Install via npm (`npm install pubsub-js`)
-* Use it directly from a CDN
-    - https://www.jsdelivr.com/package/npm/pubsub-js
-    - https://cdnjs.com/libraries/pubsub-js
-    - https://unpkg.com/pubsub-js
-* [Download a tagged version](https://github.com/mroderick/PubSubJS/tags) from GitHub
-
-**Note: the last version of this library available via bower is v1.5.4**
 
 ## Examples
 
@@ -147,41 +140,8 @@ PubSub.countSubscriptions('token');
 var isPublished = PubSub.publish('a');
 
 // token will be false if something went wrong and subscriber was not registered
-var token = PubSub.subscribe('MY TOPIC', mySubscriber); 
+var token = PubSub.subscribe('MY TOPIC', mySubscriber);
 ```
-
-### Hierarchical addressing
-
-```javascript
-// create a subscriber to receive all topics from a hierarchy of topics
-var myToplevelSubscriber = function (msg, data) {
-    console.log('top level: ', msg, data);
-}
-
-// subscribe to all topics in the 'car' hierarchy
-PubSub.subscribe('car', myToplevelSubscriber);
-
-// create a subscriber to receive only leaf topic from hierarchy op topics
-var mySpecificSubscriber = function (msg, data) {
-    console.log('specific: ', msg, data);
-}
-
-// subscribe only to 'car.drive' topics
-PubSub.subscribe('car.drive', mySpecificSubscriber);
-
-// Publish some topics
-PubSub.publish('car.purchase', {name: 'my new car'});
-PubSub.publish('car.drive', {speed: '14'});
-PubSub.publish('car.sell', {newOwner: 'someone else'});
-
-// In this scenario, myToplevelSubscriber will be called for all
-// topics, three times in total
-// But, mySpecificSubscriber will only be called once, as it only
-// subscribes to the 'car.drive' topic
-```
-
-
-
 
 ## Tips
 

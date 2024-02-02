@@ -1,8 +1,9 @@
 /**
  * Copyright (c) 2010,2011,2012,2013,2014 Morgan Roderick http://roderick.dk
+ * Copyright (c) 2024 Victor Tang (vtange)
  * License: MIT - http://mrgnrdrck.mit-license.org
  *
- * https://github.com/mroderick/PubSubJS
+ * https://github.com/vtange/PubSubJS
  */
 
 (function (root, factory){
@@ -41,6 +42,9 @@
 
     function hasKeys(obj){
         var key;
+        if (!obj) {
+            return false;
+        }
 
         for (key in obj){
             if ( Object.prototype.hasOwnProperty.call(obj, key) ){
@@ -96,7 +100,7 @@
     }
 
     function hasDirectSubscribersFor( message ) {
-        return messages[message] && hasKeys(messages[message]);
+        return hasKeys(messages[message]);
     }
 
     function messageHasSubscribers( message ) {
@@ -200,7 +204,7 @@
      * @alias clearAllSubscriptions
      */
     PubSub.clearAllSubscriptions = function clearAllSubscriptions(){
-        messages = {};
+        messages = Object.create(null);
     };
 
     /**
