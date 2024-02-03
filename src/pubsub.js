@@ -111,7 +111,9 @@
         message = (typeof message === 'symbol') ? message.toString() : message;
 
         if ( !messageHasSubscribers( String(message) ) ){
-            console.warn("No subscribers found for:", message);
+            if ( PubSub.warnNoSubscribersFound ) {
+                console.warn(`[PubSub] Publish: "${message}" has no subscribers.`);
+            }
             return false;
         }
 

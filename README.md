@@ -194,6 +194,12 @@ Setting immediate exceptions in development is easy, just tell PubSubJS about it
 PubSub.immediateExceptions = true;
 ```
 
+You can also set whether PubSub should warn you about messages published that found no subscriptions.
+
+```javascript
+PubSub.warnNoSubscribersFound = true;
+```
+
 ## Contributing to PubSubJS
 
 Please see [CONTRIBUTING.md](CONTRIBUTING.md)
