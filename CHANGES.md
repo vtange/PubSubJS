@@ -1,8 +1,15 @@
 # Changes
 
+## 2.0.1
+
+- [`4411277`](https://github.com/vtange/PubSubJS/commit/441127726d02a59e24e2666e805842e873ca58bf)
+  Give user the option to turn on/off warning when message publish finds no subscribers.
+
+_Released on 2024-02-02._
+
 ## 2.0.0
 
-- [`35994b9`](https://github.com/vtange/PubSubJS/commit/35994b95c236d71d8cc2867544a706033653c1ba)
+- [`54ea49e`](https://github.com/vtange/PubSubJS/commit/54ea49ebec7c508c91413ad36d649b6fe9625f03)
   (Breaking) Removes hierarchical addressing support.
   Add console.warn when Publish finds no subscribers for a given topic.
 
