@@ -157,7 +157,7 @@
      * @param { Function } func The function to call when a new message is published
      * @return { String }
      */
-    PubSub.subscribe = function( message, func ){
+    PubSub.subscribe = function( message, func, multipleAllowed ){
         if ( typeof func !== 'function'){
             return false;
         }
@@ -167,6 +167,9 @@
         // message is not registered yet
         if ( !Object.prototype.hasOwnProperty.call( messages, message ) ){
             messages[message] = Object.create(null);
+        } else if (!multipleAllowed) {
+            console.warn(`[PubSub] Subscribe: "${message}" already has listener.`);
+            return;
         }
 
         // forcing token as String, to allow for future expansions without breaking usage
