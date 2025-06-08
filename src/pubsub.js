@@ -155,6 +155,7 @@
      * @alias subscribe
      * @param { String } message The message to subscribe to
      * @param { Function } func The function to call when a new message is published
+     * @param { multipleAllowed } multipleAllowed Whether we can create this subscription even though a listener already exists
      * @return { String }
      */
     PubSub.subscribe = function( message, func, multipleAllowed ){
@@ -261,6 +262,9 @@
     PubSub.getSubscriptions = function getSubscriptions(topic){
         var m;
         var list = [];
+        if(topic === undefined){
+            topic = "";
+        }
         for (m in messages){
             if (Object.prototype.hasOwnProperty.call(messages, m) && m.indexOf(topic) === 0){
                 list.push(m);
